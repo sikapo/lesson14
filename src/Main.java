@@ -1,25 +1,43 @@
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
 
-
         Scanner scanner = new Scanner(System.in);
         System.out.println("Input the book title");
         Book book = new Book(scanner.nextLine());
-
-        try (FileReader fileReader = new FileReader(book.getFile())){
-            book.mostPopular(fileReader);
-        } catch (IOException e) {
-            System.err.println("No such book was found. Please, enter the correct title.");
+        FileReader fileReader;
+        try {
+            fileReader = new FileReader(book.getFile());
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
         }
 
-        try (FileReader fileReader = new FileReader(book.getFile())){
-            book.uniqueWords(fileReader);
+        String statisticsFile = book.getFile() + "_statistic.txt";
+        FileWriter fileWriter;
+        try {
+            fileWriter = new FileWriter(statisticsFile, true);
         } catch (IOException e) {
-            System.err.println("No such book was found. Please, enter the correct title.");
+            throw new RuntimeException(e);
+        }
+        try {
+            fileWriter.write(book.mostPopular(fileReader));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            fileWriter.write(book.uniqueWords(fileReader));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            fileWriter.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }

@@ -21,7 +21,7 @@ public class Book {
         return file;
     }
 
-    public void mostPopular (FileReader bookName) throws IOException {
+    public String mostPopular (FileReader bookName) throws IOException {
         ArrayList<String> words = new ArrayList<>();
         HashMap<String, Integer> mostPopular = new HashMap<>();
         String text;
@@ -52,9 +52,9 @@ public class Book {
                 .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
                 .limit(10)
                 .forEach(w -> mostPopularTen.put(w.getKey(), w.getValue()));
-        System.out.println("Here is top 10 most used more than two symbols words: \n" + mostPopularTen);
+        return "Here is top 10 most used more than two symbols words: \n" + mostPopularTen;
     }
-    public void uniqueWords (FileReader bookName) throws IOException {
+    public String uniqueWords (FileReader bookName) throws IOException {
         HashSet <String> unique = new HashSet<>();
         int c;
         StringBuilder wordBuilder = new StringBuilder();
@@ -67,6 +67,6 @@ public class Book {
         while (matcher.find()) {
             unique.add(matcher.group().toLowerCase());
         }
-        System.out.println("Your book " + "\"" + getBookName() + "\"" + " has " + unique.size() + " unique words.");
+        return "Your book " + "\"" + getBookName() + "\"" + " has " + unique.size() + " unique words.";
     }
 }
