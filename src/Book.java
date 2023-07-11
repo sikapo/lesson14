@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
@@ -10,8 +11,8 @@ public class Book {
 
     public Book(String bookName) {
         this.bookName = bookName;
-        String filePath = "D:/IT Hillel/JavaPro/lesson14/src";
-        this.file = filePath + "/" + bookName;
+        String filePath = "src";
+        this.file = new File("").getAbsolutePath() + "/" + filePath + "/" + bookName;
     }
 
     public String getBookName() {

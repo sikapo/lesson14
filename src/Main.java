@@ -19,7 +19,7 @@ public class Main {
             System.out.println(book.mostPopular(fileReader));
             fileReader.close();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.err.println("No such file was found. Please, enter the correct title");
         }
 
         String statisticsFile = book.getFile() + "_statistic.txt";
