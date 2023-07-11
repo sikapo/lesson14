@@ -1,4 +1,3 @@
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -10,10 +9,16 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Input the book title");
         Book book = new Book(scanner.nextLine());
+
         FileReader fileReader;
         try {
             fileReader = new FileReader(book.getFile());
-        } catch (FileNotFoundException e) {
+            System.out.println(book.uniqueWords(fileReader));
+            fileReader.close();
+            fileReader = new FileReader(book.getFile());
+            System.out.println(book.mostPopular(fileReader));
+            fileReader.close();
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
@@ -21,15 +26,18 @@ public class Main {
         FileWriter fileWriter;
         try {
             fileWriter = new FileWriter(statisticsFile, true);
+            fileReader = new FileReader(book.getFile());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         try {
-            fileWriter.write(book.mostPopular(fileReader));
+            fileWriter.write(book.mostPopular(fileReader) + "\n");
+            fileReader.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         try {
+            fileReader = new FileReader(book.getFile());
             fileWriter.write(book.uniqueWords(fileReader));
         } catch (IOException e) {
             throw new RuntimeException(e);
